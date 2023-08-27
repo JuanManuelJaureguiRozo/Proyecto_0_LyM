@@ -18,6 +18,9 @@ def limpiar_linea(list:linea):
 
     #esto ya quita los espacios, no se si las indentaciones
     ## sino toca quitar lo que no sirva tal que queden solo los strings
+    ### el caso de los parentesis pueden o NO llevar espacio dentro, tipo "(a, b)"
+    #### tmpc sabemos cuandos parámetros puedan solicitar; toca hacer un separador que recorra toda la lista
+    # tal vez podría recorrerse al revés, pues los paréntesis siempre van al final
     return linea.split(" ")
 
 """
