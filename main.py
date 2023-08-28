@@ -49,7 +49,6 @@ sigue, sino se para, y al final del todo se pregunta el tamaño de la lista, si 
 - Los nuevos métodos toca agregarlos de una en la lista de métodos para que haya recursión, pero ¿cómo hacemos para saber si 
 los parámetros son correctos (tipo), antes de leer las líneas de abajo?
 
-    
 """
 
 # -------------------------------------
@@ -132,6 +131,11 @@ def test_metodo (list:linea):
     elif met == "repeat":
         print(a)    
      
+
+
+
+
+lista_corchetes = []
 
 
 prueba = limpiar_linea(linea)
