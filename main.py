@@ -21,7 +21,28 @@ def limpiar_linea(list:linea):
     ### el caso de los parentesis pueden o NO llevar espacio dentro, tipo "(a, b)"
     #### tmpc sabemos cuandos parámetros puedan solicitar; toca hacer un separador que recorra toda la lista
     # tal vez podría recorrerse al revés, pues los paréntesis siempre van al final
-    return linea.split(" ")
+    linea = linea.replace("(", ",(,")
+    linea = linea.replace(")", ",),")
+    linea = linea.replace("{", ",{,")
+    linea = linea.replace("}", ",},")
+    linea = linea.replace("\t", ",")
+    linea = linea.replace(" ", ",")
+    
+    linea = linea.split(",")
+
+    for elemento in linea:
+        if elemento == "":
+            linea.remove(elemento)
+        elif elemento == " ":
+            linea.remove(elemento)
+
+    for elemento in linea:
+        if elemento == "":
+            linea.remove(elemento)
+        elif elemento == " ":
+            linea.remove(elemento)
+
+    return linea
 
 """
 LISTA DE DUDAS QUE VAN SURGIENDO 
