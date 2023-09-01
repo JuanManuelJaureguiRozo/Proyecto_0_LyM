@@ -1,7 +1,4 @@
-
-linea = "hola mundo"
-
-
+linea = "defVar nom 0 " + " defVar x 0"
 
 def limpiar_linea(line):
 
@@ -14,12 +11,6 @@ def limpiar_linea(line):
     line = line.replace(" ", ",")
     
     line = line.split(",")
-
-    for elemento in line:
-        if elemento == "":
-            line.remove(elemento)
-        elif elemento == " ":
-            line.remove(elemento)
 
     for elemento in line:
         if elemento == "":
