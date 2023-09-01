@@ -2,7 +2,7 @@
 
 #Integrantes:
 #   - Juan Manuel Jáuregui Rozo - 201922481
-#   - Adrián Suarez 
+#   - Adrián Arturo Suarez García -  
 
 # Lectura de archivo que se requiere verificar.
 archivo = open('ejemplo.txt', 'r')
@@ -56,6 +56,7 @@ LISTA DE DUDAS QUE VAN SURGIENDO
 - Al principio dice que se pueden designar variables como en python, tipo "hola = 10"; se puede?
     - En tal caso toca hacer otro caso inicial como variante de defVar
 - ¿Hay casos de #'s negativos?
+- Cuantos parámetros se pueden tener en un método? ¿Siempre menos 2?
 
 LISTA PROBLEMAS / DETALLES QUE FALTAN POR IMPLEMENTAR
 - Seguramente toque separar los parametros str / int para poder verficar dentro de un método que sea del tipo correcto
@@ -74,6 +75,7 @@ sigue, sino se para, y al final del todo se pregunta el tamaño de la lista, si 
 - Recordar que todo debe volverse minúscula, sobre todo en los parámetros
 - Los nuevos métodos toca agregarlos de una en la lista de métodos para que haya recursión, pero ¿cómo hacemos para saber si 
 los parámetros son correctos (tipo), antes de leer las líneas de abajo?
+- Todos los métodos pueden terminar con o sin ";"
 
 """
 
@@ -81,18 +83,13 @@ los parámetros son correctos (tipo), antes de leer las líneas de abajo?
 # Listas de palabras reservadas
 # -------------------------------------
 
-# Nombres de métodos, para verificar si un método es válido; para c/u toca hacer un caso, con sus parámetros y eso
-# Crear función para agregar un método, así se puede hacer recursión
 lista_noms_metodos = ["jump", "walk", "leap", "turn", "turnto",
                       "drop", "grab", "letGo", "nop"]
 
-# Tal vez no toque separarlo, pues al final se verifican aparte del resto
 lista_condiciones = ["if", "else", "while", "repeat"]
 
 lista_condicionales =["facing", "can", "not"]
 
-# Parámetros por default del proyecto; crear función que agregue cuando se declare una nueva variable
-# Recordar que toca tomar volver todo a minúscula antes de corroborarlo con estas variables
 lista_parametros_str = ["north", "south", "east", "west", "n", "s", "e", "w",
                     "left", "right", "around", "front", "back"]
 
@@ -127,7 +124,7 @@ def test_Var (linea):
     # linea[2] = valor de la variable
 
     if len(linea) == 3:       
-        if (type(linea[0]) == str) and (type(linea[1]) == str) and (type(linea[2]) == (str or int)):
+        if (type(linea[0]) == "defVar") and (type(linea[1]) == str) and (type(linea[2]) == (str or int)):
                     
             try:
                 entero = int(linea[2])    
@@ -149,10 +146,23 @@ def test_Var (linea):
     else: return False
     
      
-def test_Proc (list: linea):
-    d
+def test_Proc (linea):
+
+    if (linea[0] == "defProc") and (linea[1] == str) and (linea[2] == "(") and (linea[3] == (str or int)) and (linea[4] == (str or int)) and (linea[5] == ")"):
+        if linea[1] not in lista_noms_metodos:
+            lista_noms_metodos.append(linea[1])
+            return True
+        
+    elif (linea[0] == "defProc") and (linea[1] == str) and (linea[2] == "(") and (linea[3] == (str or int)) and (linea[4] == ")"):
+        if linea[1] not in lista_noms_metodos:
+            lista_noms_metodos.append(linea[1])
+            return True
+        
+    elif (linea[0] == "defProc") and (linea[1] == str) and (linea[2] == "(") and (linea[3] == ")"):
+        if linea[1] not in lista_noms_metodos:
+            lista_noms_metodos.append(linea[1])
+            return True
     
-a = 0   
 def test_metodo (l):
 
     # l es la lista; "prueba"
@@ -166,10 +176,6 @@ def test_metodo (l):
             return True 
         
         else: return False  
-
-    # Para walk y leap funciona si hay 1 o 2 variables
-    ## Si hay +2 dará error
-    ### tmpc está el caso que no acabe en ";", toca agregar el centinela
     
     elif met == "walk":
 
@@ -180,7 +186,7 @@ def test_metodo (l):
                 if (l[3] == ")") and (l[4] == ";"):                    
                     return True
                 
-            elif (l[1] =="(") and (l[3].lower() in lista_parametros_str):               
+            elif (l[1] =="(") and (l[3] in lista_parametros_str):               
                 if l[4] == ")" and (l[5] == ";"):                   
                     return True
             
@@ -196,7 +202,7 @@ def test_metodo (l):
                 if (l[3] == ")") and (l[4] == ";"):
                     return True
                 
-            elif (l[1] =="(") and (l[3].lower() in lista_parametros_str):
+            elif (l[1] =="(") and (l[3] in lista_parametros_str):
                 if l[4] == ")" and (l[5] == ";"):
                     return True
             
@@ -259,20 +265,37 @@ def test_metodo (l):
         except: return False   
     
     elif met == "nop":
-        try:
-            if (l[1] == "(") and (l[2] == ")") and (l[3] == ";"):
-                return True
+        if (l[1] == "(") and (l[2] == ")") and (l[3] == ";"):
+            return True
         
-        except: return False
+        else: return False
+
+    elif met in lista_noms_metodos:
+        if (l[1] == "(") and (l[2] == ")") and (l[3] == ";"):
+            return True
         
+        else: return False
+
+    elif met in lista_noms_metodos:
+        if (l[1] == "(") and (l[2] == (str or int)) and (l[3] == ")") and (l[4] == ";"):
+            return True
+        
+        else: return False
+
+    elif met in lista_noms_metodos:
+        if (l[1] == "(") and (l[2] == (str or int)) and (l[3] == (str or int)) and (l[4] == ")") and (l[5] == ";"):
+            return True
+        
+        else: return False
+
     elif met == "if":
-        print(a)
+        print(1)
         
     elif met == "while":
-        print(a)
+        print(1)
         
     elif met == "repeat":
-        print(a)    
+        print(1)    
         
     else: return False
      
