@@ -2,7 +2,7 @@ import modelo as modelo
 archivo = open("prueba.txt", "r")
 
 #print(archivo[0])
-
+"""
 with open('prueba.txt', 'r') as archivo:
     # Crea un iterador a partir del archivo
     lineas = iter(archivo)
@@ -25,3 +25,15 @@ with open('prueba.txt', 'r') as archivo:
 
 # linea1 es la del for
 # linea2 es "next(lineas)"
+
+"""
+
+l = ['1','2','3','4','5','6']
+
+i=0
+
+while i != (3-1):
+    l.pop(1)
+    i+= 1
+
+print(l)

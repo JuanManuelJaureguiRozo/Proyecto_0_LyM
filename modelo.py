@@ -290,14 +290,34 @@ def test_condicionales (l):
         if (l[1] in lista_condiciones):
             
             if l[1] == "facing":
-                if (l[2] == "(") and (l[3] in lista_parametros_turn2) and (l[4] == ")"):
-                    if (l[5] == "{") :
+                try:
+                    if (l[2] == "(") and (l[3] in lista_parametros_turn2) and (l[4] == ")"):
+                        if (l[5] == "{") :
+                            
+                            lim1 = l.index("{") 
+                            lim2 = l.index("}")
+                            lil = []
+                            # esto saca la cadena entre los parentesis y la evalúa como un método
+                            ## como vuelvo a llamar al método, hay 2 cosas: al no terminar en ; habrá error, y 
+                            i=0
+                            while i < (lim1-lim2):
+                                l.pop(lim1)
+                                i += 1
+                            l.remove(lim1)
+                            
+                            if (test_metodo(lil) == True) and l[5] == :
+                                
+                                
+                            
+                            print("a")
                 
-                else: return False    
+                except: return False 
                 
-                # if facing(O) {} else {];
+                # if facing(O)& { walk (1,w) } else { walk(1,w) };
+                # [ walk, (, 1, 2, ) ]
                 
-            elif: l[1] == "can":
+            elif l[1] == "can":
+                print("a")
             
             elif l[1] == "not":
                 print("a")
