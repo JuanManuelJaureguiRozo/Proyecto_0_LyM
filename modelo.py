@@ -35,6 +35,9 @@ def limpiar_linea(line):
 
     if line[0] == "defvar":
         line[0] = "defVar"
+        
+    elif line[0] == "defproc":
+        line[0] = "defProc"
 
     return line
 
@@ -56,11 +59,15 @@ LISTA PROBLEMAS / DETALLES QUE FALTAN POR IMPLEMENTAR
 - Para los "{}" mejor hacer una pila simple; en una lista previamente declarada se van agregando los "{", y cada que salga un 
 "}" se va eliminando la -1 posición con una función, la cual preguna el len de la lista. Si es <0 se devuelve True y el programa
 sigue, sino se para, y al final del todo se pregunta el tamaño de la lista, si no es =0, está mal y el txt es incorrecto
+
+- "if" "else" siempre están en la misma línea?
+    - Asumí que si
 """
 
 """
 FALTA:
-1. Contador o lista para los corchetes. (A)
+1. Contador o lista para los corchetes. (A) HECHO
+    - falta meterle los de los condionales
 2. Verificar condiciones while, if, repeat. (P)
 3. Definir solución para variables tipo python. (P)
 4. Definir solución para los ; de los métodos. (P)
@@ -74,14 +81,17 @@ FALTA:
 lista_noms_metodos = ["jump", "walk", "leap", "turn", "turnto",
                       "drop", "grab", "letGo", "nop"]
 
-lista_condiciones = ["if", "else", "while", "repeat"]
+lista_noms_proc = []
 
-lista_condicionales =["facing", "can", "not"]
+            #Listas condicionales   
+lista_condicionales = ["if", "else", "while", "repeat"]
 
+lista_condiciones =["facing", "can", "not"]
+
+
+            # Listas Parámetros
 lista_parametros_str = ["north", "south", "east", "west", "n", "s", "e", "w",
                     "left", "right", "around", "front", "back"]
-
-lista_noms_proc = []
 
 lista_parametros_turn1 = ["left", "right", "around"]
 
@@ -107,12 +117,10 @@ def test_Var (linea):
                     return(True)
                 
             except: 
-                if linea[2] not in lista_parametros_str:         
-                        return False
+                if linea[2] in lista_parametros_str:         
+                        return True
                 
-                else: return True
-            
-            return True
+                else: return False
         
         else: return False
     
@@ -121,22 +129,32 @@ def test_Var (linea):
      
 def test_Proc (linea):
 
-    if (linea[0] == "defProc") and (linea[1] == str) and (linea[2] == "(") and (linea[3] == (str or int)) and (linea[4] == (str or int)) and (linea[5] == ")"):
-        if linea[1] not in lista_noms_proc:
-            lista_noms_proc.append(linea[1])
-            return True
+    if (linea[0] == "defProc") and (type(linea[1]) == str) and (linea[2] == "(") and (type(linea[3]) == (str or int)) and (type(linea[4]) == (str or int)) and (linea[5] == ")"):
         
-    elif (linea[0] == "defProc") and (linea[1] == str) and (linea[2] == "(") and (linea[3] == (str or int)) and (linea[4] == ")"):
         if linea[1] not in lista_noms_proc:
             lista_noms_proc.append(linea[1])
-            return True
+        return True
         
-    elif (linea[0] == "defProc") and (linea[1] == str) and (linea[2] == "(") and (linea[3] == ")"):
+    elif (linea[0] == "defProc") and (type(linea[1]) == str) and (linea[2] == "(") and (type(linea[3]) == (str or int)) and (linea[4] == ")"):
         if linea[1] not in lista_noms_proc:
             lista_noms_proc.append(linea[1])
-            return True
+        return True
+        
+    elif (linea[0] == "defProc") and (type(linea[1]) == str) and (linea[2] == "(") and (linea[3] == ")"):
+        if linea[1] not in lista_noms_proc:
+            lista_noms_proc.append(linea[1])
+        return True
     
     else: return False
+    
+
+def test_corchete(linea):
+    
+    if ((linea[0] == "{") and (len(linea) == 1)) or ((linea[0] == "}") and (len(linea) == 1)):
+        return True
+    else: 
+        return False
+
     
 def test_metodo (l):
 
@@ -258,14 +276,56 @@ def test_metodo (l):
         elif (l[1] == "(") and (type(l[2]) == (str or int)) and (type(l[3]) == (str or int)) and (l[4] == ")") and (l[5] == ";"):
             return True
 
-    elif met == "if":
-        print(1)
-        
-    elif met == "while":
-        print(1)
-        
-    elif met == "repeat":
-        print(1)    
         
     else: return False
      
+     
+def test_condicionales (l):
+    
+    #lista_condicionales = ["if", "else", "while", "repeat"]
+
+    #lista_condiciones =["facing", "can", "not"]
+
+    if l[0] == "if":
+        if (l[1] in lista_condiciones):
+            
+            if l[1] == "facing":
+                try:
+                    if (l[2] == "(") and (l[3] in lista_parametros_turn2) and (l[4] == ")"):
+                        if (l[5] == "{") :
+                            
+                            lim1 = l.index("{") 
+                            lim2 = l.index("}")
+                            lil = []
+                            # esto saca la cadena entre los parentesis y la evalúa como un método
+                            ## como vuelvo a llamar al método, hay 2 cosas: al no terminar en ; habrá error, y 
+                            i=0
+                            while i < (lim1-lim2):
+                                l.pop(lim1)
+                                i += 1
+                            l.remove(lim1)
+                            
+                            if (test_metodo(lil) == True) and l[5] == :
+                                
+                                
+                            
+                            print("a")
+                
+                except: return False 
+                
+                # if facing(O)& { walk (1,w) } else { walk(1,w) };
+                # [ walk, (, 1, 2, ) ]
+                
+            elif l[1] == "can":
+                print("a")
+            
+            elif l[1] == "not":
+                print("a")
+        else: return False
+            
+        
+    elif l[0] == "while":
+        print(1)
+        
+    elif l[0] == "repeat":
+        print(1)    
