@@ -1,5 +1,7 @@
 import modelo as modelo
 archivo = open("prueba.txt", "r")
+archivo = archivo.readlines()
+print(archivo)
 
 #print(archivo[0])
 """
@@ -28,12 +30,5 @@ with open('prueba.txt', 'r') as archivo:
 
 """
 
-l = ['1','2','3','4','5','6']
-
-i=0
-
-while i != (3-1):
-    l.pop(1)
-    i+= 1
-
-print(l)
+#a = modelo.almacenar_parametros(archivo[0])
+#print(modelo.testProc(archivo[0], a))

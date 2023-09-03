@@ -1,5 +1,3 @@
-
-
 import modelo as modelo
 
 #recordar que solo pueden aparecer solos o dentro de un condición

@@ -1,0 +1,32 @@
+"""
+LISTA DE DUDAS QUE VAN SURGIENDO 
+- ¿Todos los archivos deben empezar con defProc?
+- ¿Puedo definir una variable que NO puedo usar? tipo, un str que no puedo meter en ninguna variable
+- Al principio dice que se pueden designar variables como en python, tipo "hola = 10"; se puede?
+    - En tal caso toca hacer otro caso inicial como variante de defVar
+- ¿Hay casos de #'s negativos?
+- Cuantos parámetros se pueden tener en un método? ¿Siempre menos 2?
+
+LISTA PROBLEMAS / DETALLES QUE FALTAN POR IMPLEMENTAR
+- Seguramente toque separar los métodos normales, los nuevos, y los condicionales, haciendo una nueva función para verificar los condicionales
+    - Puede hacerse agregando un 5to caso, o con un if dentro del verificador de métodos; seguramente 1era opción
+- La última línea de un bloque NO tiene ";" lo cual será un problema.
+    - Tal vez verificando que la siguiente línea sea "}" se pueda saltar este caso
+    - Podemos crear un diccionario de booleanos, c/u es un centinela, así podemos verificar cosas de +1 línea
+- Para los "{}" mejor hacer una pila simple; en una lista previamente declarada se van agregando los "{", y cada que salga un 
+"}" se va eliminando la -1 posición con una función, la cual preguna el len de la lista. Si es <0 se devuelve True y el programa
+sigue, sino se para, y al final del todo se pregunta el tamaño de la lista, si no es =0, está mal y el txt es incorrecto
+
+- "if" "else" siempre están en la misma línea?
+    - Asumí que si
+"""
+
+"""
+FALTA:
+1. Contador o lista para los corchetes. (A) HECHO
+    - falta meterle los de los condionales
+2. Verificar condiciones while, if, repeat. (P)
+3. Definir solución para variables tipo python. (P)
+4. Definir solución para los ; de los métodos. (P)
+5. Definir solución para facing, can y not. (J)
+"""
