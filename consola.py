@@ -17,9 +17,10 @@ for linea in archivo:
                 print("False")
                 break
             
-        elif linea[0] == "defProc": 
+        elif (linea[0] == "defProc") or (linea[0] in modelo.lista_noms_proc): 
 
-            marca = modelo.test_Proc(linea)
+            params = modelo.almacenar_parametros(linea)
+            marca = modelo.test_Proc(linea, params)
 
             if marca == False:
                 print("False")
@@ -44,12 +45,14 @@ for linea in archivo:
                         break
                      
         elif linea[0] in modelo.lista_noms_metodos:
-            
+
             marca = modelo.test_metodo(linea)
 
             if marca == False:
                 print("False")
                 break
+
+            print(marca)
         
         elif linea[0] == "":
             print("a")
