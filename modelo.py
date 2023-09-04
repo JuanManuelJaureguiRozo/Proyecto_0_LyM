@@ -322,7 +322,7 @@ def test_condicionales (l, matriz, index):
                 try:
                     
                     if (l[2] == "(") and (l[3] in lista_parametros_turn2) and (l[4] == ")"):
-                        if (l[5] == "{") :
+                        if (l[5] == "{") and (l[6] in lista_noms_metodos):
                             
                             lim1 = 5
                             lim2 = l.index("}")
@@ -342,14 +342,40 @@ def test_condicionales (l, matriz, index):
                                     if (test_metodo(lil) == True) and (l[-1] == ";"):
                                         return True
                                     elif (test_metodo(lil) == True) and (l[-1] != ";"):
-                                        lineaa = limpiar_linea(matriz[index+1])
+                                        lineaa = (matriz[index+1])
                                         if (lineaa[0] == "}") and (len(lineaa) == 1):
                                             return True
                                         else: return False
                     
-                            elif lil[0] in lista_condicionales:
-                                        print("me corchó")
-                                        return True       
+                        elif (l[5] == "{") and (l[6] in lista_condicionales):
+                            l.reverse()
+                            index_alreves = l.index("else")
+                            l.reverse()
+                            index_alderecho = len(l) - (index_alreves + 2)
+                            
+                            lim1 = 5
+                            lim2 = index_alderecho
+                            
+                            h = partir(lim1,lim2,l)
+                            lil = h[0] #aquello dentro de paréntesis que toca verificar
+                            lil.pop[-1]
+                            l = h[1]
+                            
+                            if (test_condicionales(lil, matriz, index) == True) and (l[5] == "else") and (l[6] == "{"):
+                                limi1 = 6
+                                limi2 = l.index("}")
+                                
+                                h = partir(limi1,limi2,l)
+                                lil = h[0] #aquello dentro de paréntesis que toca verificar
+                                l = h[1]   #la lista sin lo de dentro del paréntesis
+                                if (test_metodo(lil) == True) and (l[-1] == ";"):
+                                    return True
+                                elif (test_metodo(lil) == True) and (l[-1] != ";"):
+                                    lineaa = (matriz[index+1])
+                                    if (lineaa[0] == "}") and (len(lineaa) == 1):
+                                        return True
+                                    else: return False
+                               
                 except: return False 
             
             #[ 'if','can','(','walk','(','1','west',')',')','{','walk','(','1','west',')','}','else','{','nop','(',')','}' ]

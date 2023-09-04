@@ -6,11 +6,26 @@ import modelo as modelo
 lili = [ 'if','can','(','walk','(','1','west',')',')','{','walk','(','1','west',')','}','else','{','nop','(',')','}' ]
 
 
-#l = ['if','facing','(','n',')','{','if','facing','(','n',')','{','walk','(','1','w',')','}','else','{', 'walk','(','2','east',')','}',"}",'else','{', 'walk','(','2','east',')','}']
+l = ['if','facing','(','n',')','{','if','facing','(','n',')','{','walk','(','1','w',')','}','else','{', 'walk','(','2','east',')','}',"}",'else','{', 'walk','(','2','east',')','}']
 
 
-lili.reverse()
-print(lili)
+if (l[5] == "{") and (l[6] in modelo.lista_condicionales):
+                            l.reverse()
+                            index_alreves = l.index("else")
+                            l.reverse()
+                            index_alderecho = len(l) - (index_alreves+2)
+                            
+                            lim1 = 5
+                            lim2 = index_alderecho
+                            
+                            h = modelo.partir(lim1,lim2,l)
+                            lil = h[0] #aquello dentro de paréntesis que toca verificar
+                            l = h[1]
+                            print(lil)
+                            print(l)
+
+
+
 """
 def partir (lim1, lim2, linea):
     
