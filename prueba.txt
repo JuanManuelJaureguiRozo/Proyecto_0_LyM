@@ -1,10 +1,6 @@
-<<<<<<< HEAD
-nop();
-=======
 defProc putCB (c, b)
 putCB (c, b)
 declarada
 de
 DUDAS
 declaradad
->>>>>>> main
