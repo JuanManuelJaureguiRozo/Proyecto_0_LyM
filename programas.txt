@@ -1,12 +1,3 @@
-Falta:
-
-1. While - can - CHeck
-2. While - not - Check
-3. Repeat - Check 
-4. Recursión if
-5. ; caso hp - Check
-6. Verificar todo
-
 Programa 1 (válido):
 
 defVar nom 0
@@ -32,7 +23,7 @@ defProc goWest()
 }
 
 {
-jump(3,3)
+jump(3,3);
 putCB(2,1)
 }
 
