@@ -4,7 +4,7 @@
 #   - Juan Manuel Jáuregui Rozo - 201922481
 #   - Adrián Arturo Suarez García - 202123771
 
-import consola as consola
+#import consola as consola
 
 # -------------------------------------
 # Listas de palabras reservadas
@@ -41,6 +41,7 @@ def limpiar_linea(line):
 
     line = line.lower()
     line = line.rstrip("\n")
+    line = line.lstrip()
 
     line = line.replace("(", ",(,")
     line = line.replace(")", ",),")
@@ -76,12 +77,10 @@ def limpiar_linea(line):
 # -------------------------------------
 
 def test_Var(linea): 
-
-    if len(linea) == 3:       
-        if (type(linea[0]) == "defVar") and (type(linea[1]) == str) and (type(linea[2]) == (str or int)):
-                    
+    if len(linea) == 3:     
+        if (linea[0] == "defVar") and (type(linea[1]) == str) and (type(linea[2]) == str):  
             try:
-                entero = int(linea[2])    
+                entero = int(linea[2])   
                 if linea[1] not in lista_parametros_int:   
                     lista_parametros_int.append(linea[1])   
                     return(True)
@@ -118,6 +117,12 @@ def test_Proc(linea, lista_parametros):
                     if linea[1] not in lista_noms_proc:
                         lista_noms_proc.append(linea[1])
                         return True
+                    
+        if lista_parametros == []:
+            if linea[3] == ")":
+                if linea[1] not in lista_noms_proc:
+                    lista_noms_proc.append(linea[1])
+                    return True
                     
     elif (linea[0] in lista_noms_proc) and (linea[1] == "("):
         tam = len(lista_parametros)

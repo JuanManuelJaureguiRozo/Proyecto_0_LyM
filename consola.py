@@ -7,13 +7,14 @@ corchetes =[]
 matriz_archivo = []
 
 for linea in archivo:
-    linea = modelo.limpiar_linea(linea)
-    
-    matriz_archivo.append(linea)
+    if linea != "\n": 
+        linea = modelo.limpiar_linea(linea)
+        matriz_archivo.append(linea)
 
 def funcion_consola(linea_en_una_lista, matriz_archivo, numero):
     
     try: 
+
         if linea_en_una_lista[0] == "defVar":
             
             marca = modelo.test_Var(linea_en_una_lista)
@@ -32,6 +33,7 @@ def funcion_consola(linea_en_una_lista, matriz_archivo, numero):
         elif (linea_en_una_lista[0] == "{") or (linea[0] == "}" ): 
             
             marca = modelo.test_corchete(linea_en_una_lista)
+            print(marca)
 
             if marca == True:
                 pass
@@ -48,6 +50,7 @@ def funcion_consola(linea_en_una_lista, matriz_archivo, numero):
         elif (linea_en_una_lista[0] in modelo.lista_noms_metodos):
             
             marca = modelo.test_metodo(linea_en_una_lista)
+            print(marca)
 
             if marca == True:
                 pass
@@ -58,6 +61,7 @@ def funcion_consola(linea_en_una_lista, matriz_archivo, numero):
                 if elemento == "{":
             
                     marca = modelo.test_Proc(linea_en_una_lista, matriz_archivo, numero)
+                    #print(marca)
 
             if marca == True:
                 pass
@@ -65,8 +69,14 @@ def funcion_consola(linea_en_una_lista, matriz_archivo, numero):
     except: print("False")
 
 for linea_en_una_lista in matriz_archivo:
-    numero = matriz_archivo.index(linea_en_una_lista)
-    funcion_consola(linea_en_una_lista, matriz_archivo, numero)
+    try:
+        print(linea_en_una_lista)
+        numero = matriz_archivo.index(linea_en_una_lista)
+        funcion_consola(linea_en_una_lista, matriz_archivo, numero)
+
+    except: print("False")
+
+
 
 
 

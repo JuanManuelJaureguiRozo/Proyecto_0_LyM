@@ -6,3 +6,89 @@ Falta:
 4. Recursión if
 5. ; caso hp - Check
 6. Verificar todo
+
+Programa 1 (válido):
+
+defVar nom 0
+defVar x 0
+defVar y 0
+defVar one 0
+
+defProc putCB (c, b)
+{
+    drop(c);
+    letGo(b);
+    walk(n)
+}
+
+defProc goNorth()
+{
+    while can(walk(1, north)) { walk(1, north)}
+}
+
+defProc goWest()
+{
+    if can(walk(1, west)) { walk(1, west)} else nop()
+}
+
+{
+jump(3,3)
+putCB(2,1)
+}
+
+Programa 2 (inválido):
+
+{
+    drop(1);
+    letGo(2);
+    walk(1);
+    while can(walk(1, north)) {
+        walk(1, north);
+        while can(walk(1, north)) { walk(1, north)
+        }
+    }
+}
+
+Programa 3 (inválido):
+
+defProc putCB (c, b)
+{
+    drop(c);
+    letGo(b);
+    walk(1);
+    putDC(1,1)
+}
+
+{
+jump(3,3);
+putCB(2,1)
+}
+
+defProc goNorth()
+{
+    while can(walk(1,north)) { walk(1,north)};
+    putCB(1,1)
+}
+
+{
+jump(3,4);
+putCB(5,5);
+goForth()
+}
+
+defProc goWest()
+{
+
+    if can(walk(1,west)) { walk(1,west)} else {nop()};
+    goForth();
+    goFest();
+
+}
+
+{
+jump(4,5);
+putCB(6,7);
+goNorth();
+goWest1();
+goNorth1()
+}
