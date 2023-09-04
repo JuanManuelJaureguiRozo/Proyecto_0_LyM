@@ -1,34 +1,82 @@
 import modelo as modelo
-archivo = open("prueba.txt", "r")
-archivo = archivo.readlines()
-print(archivo)
 
-#print(archivo[0])
+
+
+#l = ['if','facing','(','n',')','{','walk','(','1','w',')','}','else','{', 'walk','(','2','east',')','}']
+lili = [ 'if','can','(','walk','(','1','west',')',')','{','walk','(','1','west',')','}','else','{','nop','(',')','}' ]
+
+
+#l = ['if','facing','(','n',')','{','if','facing','(','n',')','{','walk','(','1','w',')','}','else','{', 'walk','(','2','east',')','}',"}",'else','{', 'walk','(','2','east',')','}']
+
+
+lili.reverse()
+print(lili)
 """
-with open('prueba.txt', 'r') as archivo:
-    # Crea un iterador a partir del archivo
-    lineas = iter(archivo)
+def partir (lim1, lim2, linea):
     
-    # Itera a través de las líneas del archivo
-    for ln in lineas:
-        # Procesa la línea actual
-        linea1 = modelo.limpiar_linea(ln)
-        print("Línea actual:", linea1)
-        
-        try:
-            linea2 = modelo.limpiar_linea(next(lineas))
-        except StopIteration:
-            pass
-        
-        print(linea2)
-        
-        
+    lil = []
+    i = 0
+    while i < (lim2-lim1):
+            lil.append(linea[lim1])
+            linea.pop(lim1)
+            i += 1
+    linea.pop(lim1)
+    lil.pop(0)
+    lil.append(";")
+    
+    return lil, linea
+
+limi1 = 2
+limi2 = lili.index(")") +1
 
 
-# linea1 es la del for
-# linea2 es "next(lineas)"
+h =partir(limi1,limi2,lili)
+n = h[0]
+lili = h[1]
 
+limii1 = 2
+limii2 = lili.index("}")
+print(limii1)
+print(limii2)
+
+print(partir(limii1,limii2,lili))
 """
 
-#a = modelo.almacenar_parametros(archivo[0])
-#print(modelo.testProc(archivo[0], a))
+"""
+if (l[2] == "(") and (l[3] in modelo.lista_parametros_turn2) and (l[4] == ")"):
+    if (l[5] == "{") :
+        
+        lim1 = 5
+        lim2 = l.index("}")
+        
+        h = partir(lim1,lim2,l)
+        lil = h[0]
+        l = h[1]
+        
+        if (lil[0] in modelo.lista_noms_metodos) or (lil[0] in modelo.lista_noms_proc):
+            if (modelo.test_metodo(lil) == True) and (l[5] == "else") and (l[6] == "{"):
+                lim1 = 6
+                lim2 = l.index("}")
+                lil = []
+                # esto saca la cadena entre los parentesis y la evalúa como un método
+                i=0
+                while i < (lim2-lim1):
+                    lil.append(l[lim1])
+                    l.pop(lim1)
+                    i += 1
+                l.pop(lim1)
+                lil.pop(0)
+                lil.append(";")
+                if modelo.test_metodo(lil) == True:
+                    #return True
+                    print("a")
+                
+        elif lil[0] in modelo.lista_condicionales:
+            print("me corchó")
+        """    
+                                
+                                
+
+                                   
+                                
+                                
