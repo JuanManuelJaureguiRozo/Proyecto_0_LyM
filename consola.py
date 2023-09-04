@@ -127,7 +127,13 @@ for linea_en_una_lista in matriz_archivo:
             
             for elemento in linea_en_una_lista:
                 if elemento == "{":
-            
+                    corchetes.append("{")
+                elif elemento == "}":
+                    try: corchetes.pop(-1)
+                    except: 
+                        print(False)
+                        break
+
             marca = modelo.test_Proc(linea_en_una_lista, matriz_archivo, numero)
 
             if marca == False:
