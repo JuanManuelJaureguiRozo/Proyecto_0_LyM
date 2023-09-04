@@ -15,17 +15,17 @@ lista_noms_metodos = ["jump", "walk", "leap", "turn", "turnto",
 lista_noms_proc = []
 
 #Listas condicionales   
-lista_condicionales = ["if", "else", "while", "repeat"]
+lista_condicionales = ["if", "while", "repeat"]
 
 lista_condiciones =["facing", "can", "not"]
 
 # Listas Parámetros
-lista_parametros_str = ["north", "south", "east", "west",
+lista_parametros_str = ["north", "south", "east", "west", "n","s","e","w",
                     "left", "right", "around", "front", "back"]
 
 lista_parametros_turn1 = ["left", "right", "around"]
 
-lista_parametros_turn2 = ["north", "south", "east", "west"]
+lista_parametros_turn2 = ["north", "south", "east", "west", "n","s","e","w"]
 
 lista_param_dir = []
 
@@ -134,7 +134,7 @@ def test_corchete(linea):
         return False
 
     
-def test_metodo(l):
+def test_metodo(l, matriz, index):
 
     met = l[0]
     
@@ -156,17 +156,20 @@ def test_metodo(l):
         try: 
             entero = int(l[2])
             
-            if (l[1] == "(") and (type(entero) == int):                
-                if (l[3] == ")") and (l[4] == ";"):                    
+            if (l[1] == "(") and (type(entero) == int) and (l[3] == ")"):    
+                        
+                if (l[4] == ";"):                    
                     return True
+            
                 
-            elif (l[1] =="(") and (l[3] in lista_parametros_str):               
-                if l[4] == ")" and (l[5] == ";"):                   
-                    return True
+            elif (l[1] =="(") and (type(entero) == int) and (l[3] in lista_parametros_str) and l[4] == ")" and (l[5] == ";"):       
+                print("av")        
+                return True
             
             else: return False
         
-        except: return False
+        except: 
+            return False
         
     elif met == "leap":
         try: 
@@ -262,11 +265,24 @@ def test_block (l):
         if l[-1] == "}":
             return True
     else: return False
+    
+def partir (lim1, lim2, linea):
+    
+    lil = []
+    i = 0
+    while i < (lim2-lim1):
+            lil.append(linea[lim1])
+            linea.pop(lim1)
+            i += 1
+    linea.pop(lim1)
+    lil.pop(0)
+    lil.append(";")
+    
+    return lil, linea
 
-def test_condicionales (l):
+def test_condicionales (l, matriz, index):
     
     #lista_condicionales = ["if", "else", "while", "repeat"]
-
     #lista_condiciones =["facing", "can", "not"]
 
     if l[0] == "if":
@@ -274,33 +290,91 @@ def test_condicionales (l):
             
             if l[1] == "facing":
                 try:
+                    
                     if (l[2] == "(") and (l[3] in lista_parametros_turn2) and (l[4] == ")"):
                         if (l[5] == "{") :
                             
-                            lim1 = l.index("{") 
+                            lim1 = 5
                             lim2 = l.index("}")
-                            lil = []
-                            # esto saca la cadena entre los parentesis y la evalúa como un método
-                            ## como vuelvo a llamar al método, hay 2 cosas: al no terminar en ; habrá error, y 
-                            i=0
-                            while i < (lim1-lim2):
-                                l.pop(lim1)
-                                i += 1
-                            l.remove(lim1)
                             
-                            if (test_metodo(lil) == True) and l[5] == 1:
-                                print("a")
-                
+                            h = partir(lim1,lim2,l)
+                            lil = h[0] #aquello dentro de paréntesis que toca verificar
+                            l = h[1]   #la lista sin lo de dentro del paréntesis
+                            
+                            if (lil[0] in lista_noms_metodos) or (lil[0] in lista_noms_proc):
+                                if (test_metodo(lil) == True) and (l[5] == "else") and (l[6] == "{"):
+                                    limi1 = 6
+                                    limi2 = l.index("}")
+                                    
+                                    h = partir(limi1,limi2,l)
+                                    lil = h[0] #aquello dentro de paréntesis que toca verificar
+                                    l = h[1]   #la lista sin lo de dentro del paréntesis
+                                    if (test_metodo(lil) == True) and (l[-1] == ";"):
+                                        return True
+                                    elif (test_metodo(lil) == True) and (l[-1] != ";"):
+                                        lineaa = limpiar_linea(matriz[index+1])
+                                        if (lineaa[0] == "}") and (len(lineaa) == 1):
+                                            return True
+                                        else: return False
+                    
+                            elif lil[0] in lista_condicionales:
+                                        print("me corchó")
+                                        return True       
                 except: return False 
-                
-                # if facing(O)& { walk (1,w) } else { walk(1,w) };
-                # [ walk, (, 1, 2, ) ]
+            
+            #[ 'if','can','(','walk','(','1','west',')',')','{','walk','(','1','west',')','}','else','{','nop','(',')','}' ]
+            #[ 'if','can','{','walk','(','1','west',')','}','else','nop','(',')' ]
+            #[ 'if','can','else','nop','(',')' ]
                 
             elif l[1] == "can":
-                print("a")
+                try:
+                    
+                    if (l[2] == "(") and (l[3] in (lista_noms_metodos or lista_noms_proc)):
+                        
+                        lim1 = 2
+                        lim2 = l.index(")") +1
+                        h = partir(lim1,lim2,l)
+                        lil = h[0] #aquello dentro de paréntesis del can
+                        l = h[1]   #la lista sin lo de dentro del paréntesis
+                        
+                        if (test_metodo(lil) == True) and (l[3] == "{"):
+                            limi1 = 3
+                            limi2 = l.index("}")
+                            
+                            h = partir(limi1,limi2,l)
+                            lili = h[0] # el bloque que ejecuta can
+                            l = h[1]   #la lista sin lo de dentro del paréntesis
+                            
+                            if (test_metodo(lili) == True) and (l[3] == "else") and (l[4] == "{"):
+                                limimi1 = 3
+                                limimi2 = l.index("}")
+                                
+                                h = partir(limimi1,limimi2,l)
+                                lilili = h[0] #el bloque que ejecuta else
+                                l = h[1]   #la lista sin lo de dentro del paréntesis
+                                
+                                if (test_metodo(lilili) == True) and (l[-1] == ";"):
+                                    return True
+                                elif (test_metodo(lilili) == True) and (l[-1] != ";"):
+                                        lineaa = matriz[index+1]
+                                        if (lineaa[0] == "}") and (len(lineaa) == 1):
+                                            return True
+                                        else: return False
+            
+                    elif lil[0] in lista_condicionales:
+                                print("me corchó")
+                                return True       
+                except: return False 
             
             elif l[1] == "not":
-                print("a")
+                for elemento in l:
+                    if elemento == "not":
+                        l.remove("elemento")
+                marca = test_condicionales(l,matriz,index)
+                if marca == True:
+                    return True
+                else: return False
+                
         else: return False
             
         

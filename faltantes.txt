@@ -29,4 +29,11 @@ FALTA:
 3. Definir solución para variables tipo python. (P)
 4. Definir solución para los ; de los métodos. (P)
 5. Definir solución para facing, can y not. (J)
+
+Dudas Adrián
+- Pq en test_proc recibe 2 variables? la lista del segundo parámetro no existe
+    - la de "almacenar_parametros" no se usa nunca
+    - El segundo caso no debería entrar nunca, pq entraría a test_metodo
+- test_metodo la opción de proc no es recursiva
+- ¿En qué momento un defProc aprobado agrega el nombre del proceso a la list_noms_proc?
 """

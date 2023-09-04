@@ -1,7 +1,7 @@
 import modelo as modelo
 
 #recordar que solo pueden aparecer solos, o dentro de un condición
-corchetes =[]
+
 """
 archivo = open("prueba.txt", "r")
 
@@ -63,6 +63,8 @@ for linea in archivo:
 
 archivo = open("prueba.txt", "r")
 
+corchetes =[]
+
 matriz_archivo = []
 
 for linea in archivo:
@@ -76,7 +78,7 @@ for linea_en_una_lista in matriz_archivo:
     numero = matriz_archivo.index(linea_en_una_lista)
     
     try: 
-        if linea[0] == "defVar":
+        if linea_en_una_lista[0] == "defVar":
             
             marca = modelo.test_Var(linea_en_una_lista)
 
@@ -84,7 +86,7 @@ for linea_en_una_lista in matriz_archivo:
                 print("False")
                 break
             
-        elif linea[0] == "defProc": 
+        elif linea_en_una_lista[0] == "defProc": 
 
             marca = modelo.test_Proc(linea_en_una_lista)
 
@@ -92,7 +94,7 @@ for linea_en_una_lista in matriz_archivo:
                 print("False")
                 break
             
-        elif (linea[0] == "{") or (linea[0] == "}" ): 
+        elif (linea_en_una_lista[0] == "{") or (linea[0] == "}" ): 
             
             marca = modelo.test_corchete(linea_en_una_lista)
 
@@ -101,26 +103,33 @@ for linea_en_una_lista in matriz_archivo:
                 break
             
             elif marca == True:
-                if linea[0] == "{":
+                if linea_en_una_lista[0] == "{":
                     corchetes.append("{")
                     
-                elif linea[0] == "}":
+                elif linea_en_una_lista[0] == "}":
                     corchetes.pop(-1)
                     if len(corchetes) < 0:
                         print("False")
                         break
                      
-        elif linea[0] in modelo.lista_noms_metodos:
+        elif (linea_en_una_lista[0] in modelo.lista_noms_metodos) or (linea_en_una_lista[0] in modelo.lista_noms_proc):
             
             marca = modelo.test_metodo(linea_en_una_lista)
 
             if marca == False:
                 print("False")
                 break
-        
-        elif linea[0] == "":
-            print("a")
             
+        elif linea_en_una_lista[0] in modelo.lista_condicionales:
+            
+            for elemento in linea_en_una_lista:
+                if elemento == "{":
+            
+            marca = modelo.test_Proc(linea_en_una_lista, matriz_archivo, numero)
+
+            if marca == False:
+                print("False")
+                break
 
     except: print("False")
 
