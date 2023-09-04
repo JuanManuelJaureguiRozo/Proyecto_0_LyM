@@ -10,7 +10,7 @@
 
 # Listas métodos
 lista_noms_metodos = ["jump", "walk", "leap", "turn", "turnto",
-                      "drop", "grab", "letGo", "nop"]
+                      "drop", "get", "grab", "letgo", "nop"]
 
 lista_noms_proc = []
 
@@ -144,8 +144,13 @@ def test_metodo(l, matriz, index):
             entero1 = int(l[2])
             entero2 = int(l[3])
             
-            if (l[1] == "(") and (type(entero1) == int) and (type(entero2) == int) and (l[4] == ")") and (l[5] == ";"):         
-                return True
+            if (l[1] == "(") and (type(entero1) == int) and (type(entero2) == int) and (l[4] == ")"):
+                if (l[5] == ";"):         
+                    return True
+                else:
+                    linea_sig = matriz(index) + 1
+                    if (linea_sig[0] == "}") and len(linea_sig) == 1:
+                        return True
             
             else: return False
 
@@ -174,30 +179,48 @@ def test_metodo(l, matriz, index):
     elif met == "leap":
         try: 
             entero = int(l[2])
-            
-            if (l[1] == "(") and (type(entero) == int):
-                if (l[3] == ")") and (l[4] == ";"):
+
+            if (l[1] == "(") and (type(entero) == int) and (l[3] == ")"):
+                if  (l[4] == ";"):
                     return True
                 
-            elif (l[1] =="(") and (l[3] in lista_parametros_str):
-                if l[4] == ")" and (l[5] == ";"):
-                    return True
+                else:
+                    linea_sig = matriz(index) + 1
+                    if (linea_sig[0] == "}") and len(linea_sig) == 1:
+                        return True
             
+            elif (l[1] == "(") and (type(entero) == int) and (l[3] in lista_parametros_str) and (l[4] == ")"):
+                if  (l[5] == ";"):
+                    return True
+                
+                else:
+                    linea_sig = matriz(index) + 1
+                    if (linea_sig[0] == "}") and len(linea_sig) == 1:
+                        return True
+                    
         except: return False
         
     elif met == "turn":
-        if (l[1] == "(") and (l[2] in lista_parametros_turn1):
-                if (l[3] == ")") and (l[4] == ";"):
+        if (l[1] == "(") and (l[2] in lista_parametros_turn1) and (l[3] == ")"):
+                if (l[4] == ";"):
                     return True
-                else: return False
+                
+                else:
+                    linea_sig = matriz(index) + 1
+                    if (linea_sig[0] == "}") and len(linea_sig) == 1:
+                        return True
                 
         else:return False
         
     elif met == "turnto":
-        if (l[1] == "(") and (l[2] in lista_parametros_turn2):
-                if (l[3] == ")") and (l[4] == ";"):
+        if (l[1] == "(") and (l[2] in lista_parametros_turn2) and (l[3] == ")"):
+                if (l[4] == ";"):
                     return True
-                else: return False
+
+                else:
+                    linea_sig = matriz(index) + 1
+                    if (linea_sig[0] == "}") and len(linea_sig) == 1:
+                        return True
         
         else: return False
         
@@ -205,9 +228,14 @@ def test_metodo(l, matriz, index):
         try: 
             entero = int(l[2])
             
-            if (l[1] == "(") and (type(entero) == int):
-                    if (l[3] == ")") and (l[4] == ";"):
+            if (l[1] == "(") and (type(entero) == int) and (l[3] == ")"):
+                    if (l[4] == ";"):
                         return True
+                    
+                    else:
+                        linea_sig = matriz(index) + 1
+                        if (linea_sig[0] == "}") and len(linea_sig) == 1:
+                            return True
         
         except: return False
     
@@ -215,9 +243,14 @@ def test_metodo(l, matriz, index):
         try: 
             entero = int(l[2])
             
-            if (l[1] == "(") and (type(entero) == int):
-                    if (l[3] == ")") and (l[4] == ";"):
+            if (l[1] == "(") and (type(entero) == int) and (l[3] == ")"):
+                    if (l[4] == ";"):
                         return True
+                    
+                    else:
+                        linea_sig = matriz(index) + 1
+                        if (linea_sig[0] == "}") and len(linea_sig) == 1:
+                            return True
         
         except: return False
             
@@ -225,45 +258,42 @@ def test_metodo(l, matriz, index):
         try: 
             entero = int(l[2])
             
-            if (l[1] == "(") and (type(entero) == int):
-                    if (l[3] == ")") and (l[4] == ";"):
+            if (l[1] == "(") and (type(entero) == int) and (l[3] == ")"):
+                    if (l[4] == ";"):
                         return True
+                    
+                    else:
+                        linea_sig = matriz(index) + 1
+                        if (linea_sig[0] == "}") and len(linea_sig) == 1:
+                            return True
         
         except: return False
         
-    elif met == "letGo":
+    elif met == "letgo":
         try: 
             entero = int(l[2])
             
-            if (l[1] == "(") and (type(entero) == int):
-                    if (l[3] == ")") and (l[4] == ";"):
+            if (l[1] == "(") and (type(entero) == int) and (l[3] == ")"):
+                    if (l[4] == ";"):
                         return True
+                    
+                    else:
+                        linea_sig = matriz(index) + 1
+                        if (linea_sig[0] == "}") and len(linea_sig) == 1:
+                            return True
         
         except: return False   
     
     elif met == "nop":
-        if (l[1] == "(") and (l[2] == ")") and (l[3] == ";"):
-            return True
+        if (l[1] == "(") and (l[2] == ")"):
+            if (l[3] == ";"):
+                return True
         
-        else: return False
-
-    elif met in lista_noms_proc:
-        if (l[1] == "(") and (l[2] == ")") and (l[3] == ";"):
-            return True
+            else:
+                linea_sig = matriz(index) + 1
+                if (linea_sig[0] == "}") and len(linea_sig) == 1:
+                    return True
         
-        elif (l[1] == "(") and (type(l[2]) == (str or int)) and (l[3] == ")") and (l[4] == ";"):
-            return True
-        
-        elif (l[1] == "(") and (type(l[2]) == (str or int)) and (type(l[3]) == (str or int)) and (l[4] == ")") and (l[5] == ";"):
-            return True
-
-        
-    else: return False
-
-def test_block (l):
-    if l[0] == "{":
-        if l[-1] == "}":
-            return True
     else: return False
     
 def partir (lim1, lim2, linea):
@@ -382,22 +412,19 @@ def test_condicionales (l, matriz, index):
         if l[1] in lista_condiciones:
             
             if l[1] == "facing":
-                if (l[2] == "(") and (l[3] in lista_parametros_turn2) and (l[4] == ")"):
-                    nl = l[5:]
-                    if test_block(nl) == True:
-                        return True
+                try:
+    
+                    if (l[2] == "(") and (l[3] in lista_parametros_turn2) and (l[4] == ")"):
+                        if (l[5] == "{") :
+                            print(1)
+                except: return False
+
             
             elif l[1] == "can":
-                if ((l[2] == "(") and l[3] in lista_parametros_str) and (l[4] == ")"):
-                    nl = l[5:]
-                    if test_block(nl) == True:
-                        return True
+                return True
                     
             elif l[1] == "not":
-                if ((l[2] == "(") and l[3] in lista_parametros_str) and (l[4] == ")"):
-                    nl = l[5:]
-                    if test_block(nl) == True:
-                        return True
+                return True
         
     elif l[0] == "repeat":
         if type(l[1]) == int:
