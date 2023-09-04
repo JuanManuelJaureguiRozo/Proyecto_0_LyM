@@ -4,6 +4,8 @@
 #   - Juan Manuel Jáuregui Rozo - 201922481
 #   - Adrián Arturo Suarez García - 202123771
 
+#import consola as consola
+
 # -------------------------------------
 # Listas de palabras reservadas
 # -------------------------------------
@@ -39,6 +41,7 @@ def limpiar_linea(line):
 
     line = line.lower()
     line = line.rstrip("\n")
+    line = line.lstrip()
 
     line = line.replace("(", ",(,")
     line = line.replace(")", ",),")
@@ -74,12 +77,10 @@ def limpiar_linea(line):
 # -------------------------------------
 
 def test_Var(linea): 
-
-    if len(linea) == 3:       
-        if (type(linea[0]) == "defVar") and (type(linea[1]) == str) and (type(linea[2]) == (str or int)):
-                    
+    if len(linea) == 3:     
+        if (linea[0] == "defVar") and (type(linea[1]) == str) and (type(linea[2]) == str):  
             try:
-                entero = int(linea[2])    
+                entero = int(linea[2])   
                 if linea[1] not in lista_parametros_int:   
                     lista_parametros_int.append(linea[1])   
                     return(True)
@@ -117,6 +118,12 @@ def test_Proc(linea, lista_parametros):
                         lista_noms_proc.append(linea[1])
                         return True
                     
+        if lista_parametros == []:
+            if linea[3] == ")":
+                if linea[1] not in lista_noms_proc:
+                    lista_noms_proc.append(linea[1])
+                    return True
+                    
     elif (linea[0] in lista_noms_proc) and (linea[1] == "("):
         tam = len(lista_parametros)
         for i in lista_parametros:
@@ -135,12 +142,11 @@ def test_corchete(linea):
 
     
 def test_metodo(l, matriz, index):
-
     met = l[0]
     
     if met == "jump":  
-
         try:
+
             entero1 = int(l[2])
             entero2 = int(l[3])
             
@@ -161,15 +167,27 @@ def test_metodo(l, matriz, index):
         try: 
             entero = int(l[2])
             
-            if (l[1] == "(") and (type(entero) == int) and (l[3] == ")"):    
-                        
-                if (l[4] == ";"):                    
+            if (l[1] == "(") and (type(entero) == int) and (l[3] == ")"):          
+                if (l[4] == ";"):  
+                    linea_sig = matriz(index) + 1
+                    if (len(linea_sig) > 1):
+                        return False                  
                     return True
+                else:
+                    linea_sig = matriz(index) + 1
+                    if (linea_sig[0] == "}") and len(linea_sig) == 1:
+                        return True
             
-                
-            elif (l[1] =="(") and (type(entero) == int) and (l[3] in lista_parametros_str) and l[4] == ")" and (l[5] == ";"):       
-                print("av")        
-                return True
+            elif (l[1] =="(") and (type(entero) == int) and (l[3] in lista_parametros_str) and l[4] == ")":
+                if (l[5] == ";"):   
+                    linea_sig = matriz(index) + 1
+                    if (len(linea_sig) > 1):
+                        return False    
+                    return True
+                else:
+                    linea_sig = matriz(index) + 1
+                    if (linea_sig[0] == "}") and len(linea_sig) == 1:
+                        return True
             
             else: return False
         
@@ -182,6 +200,9 @@ def test_metodo(l, matriz, index):
 
             if (l[1] == "(") and (type(entero) == int) and (l[3] == ")"):
                 if  (l[4] == ";"):
+                    linea_sig = matriz(index) + 1
+                    if (len(linea_sig) > 1):
+                        return False
                     return True
                 
                 else:
@@ -191,6 +212,9 @@ def test_metodo(l, matriz, index):
             
             elif (l[1] == "(") and (type(entero) == int) and (l[3] in lista_parametros_str) and (l[4] == ")"):
                 if  (l[5] == ";"):
+                    linea_sig = matriz(index) + 1
+                    if (len(linea_sig) > 1):
+                        return False
                     return True
                 
                 else:
@@ -203,6 +227,9 @@ def test_metodo(l, matriz, index):
     elif met == "turn":
         if (l[1] == "(") and (l[2] in lista_parametros_turn1) and (l[3] == ")"):
                 if (l[4] == ";"):
+                    linea_sig = matriz(index) + 1
+                    if (len(linea_sig) > 1):
+                        return False
                     return True
                 
                 else:
@@ -215,6 +242,9 @@ def test_metodo(l, matriz, index):
     elif met == "turnto":
         if (l[1] == "(") and (l[2] in lista_parametros_turn2) and (l[3] == ")"):
                 if (l[4] == ";"):
+                    linea_sig = matriz(index) + 1
+                    if (len(linea_sig) > 1):
+                        return False
                     return True
 
                 else:
@@ -230,6 +260,9 @@ def test_metodo(l, matriz, index):
             
             if (l[1] == "(") and (type(entero) == int) and (l[3] == ")"):
                     if (l[4] == ";"):
+                        linea_sig = matriz(index) + 1
+                        if (len(linea_sig) > 1):
+                            return False
                         return True
                     
                     else:
@@ -245,6 +278,9 @@ def test_metodo(l, matriz, index):
             
             if (l[1] == "(") and (type(entero) == int) and (l[3] == ")"):
                     if (l[4] == ";"):
+                        linea_sig = matriz(index) + 1
+                        if (len(linea_sig) > 1):
+                            return False
                         return True
                     
                     else:
@@ -260,6 +296,9 @@ def test_metodo(l, matriz, index):
             
             if (l[1] == "(") and (type(entero) == int) and (l[3] == ")"):
                     if (l[4] == ";"):
+                        linea_sig = matriz(index) + 1
+                        if (len(linea_sig) > 1):
+                            return False
                         return True
                     
                     else:
@@ -275,6 +314,9 @@ def test_metodo(l, matriz, index):
             
             if (l[1] == "(") and (type(entero) == int) and (l[3] == ")"):
                     if (l[4] == ";"):
+                        linea_sig = matriz(index) + 1
+                        if (len(linea_sig) > 1):
+                            return False
                         return True
                     
                     else:
@@ -287,6 +329,9 @@ def test_metodo(l, matriz, index):
     elif met == "nop":
         if (l[1] == "(") and (l[2] == ")"):
             if (l[3] == ";"):
+                linea_sig = matriz(index) + 1
+                if (len(linea_sig) > 1):
+                    return False
                 return True
         
             else:
@@ -367,7 +412,7 @@ def test_condicionales (l, matriz, index):
                         lil = h[0] #aquello dentro de paréntesis del can
                         l = h[1]   #la lista sin lo de dentro del paréntesis
                         
-                        if (test_metodo(lil) == True) and (l[3] == "{"):
+                        if (test_metodo(lil) == True) and (l[3] == "{"): #l[2]?
                             limi1 = 3
                             limi2 = l.index("}")
                             
@@ -415,22 +460,118 @@ def test_condicionales (l, matriz, index):
                 try:
     
                     if (l[2] == "(") and (l[3] in lista_parametros_turn2) and (l[4] == ")"):
-                        if (l[5] == "{") :
-                            print(1)
-                except: return False
+                        if (l[5] == "{") and len(l) > 6:
+                            lim1 = 5
+                            lim2 = l.index("}")
+                            
+                            h = partir(lim1,lim2,l)
+                            lil = h[0] #aquello dentro de paréntesis que toca verificar
+                            l = h[1]   #la lista sin lo de dentro del paréntesis
 
+                            if (test_metodo(lil) == True) and (l[-1] == ";"):
+                                return True
+                            
+                        elif (l[5] == "{") and len(l) == 6:
+                            centinela = False
+                            num_linea = index + 1
+                            while centinela == False:
+
+                                if matriz[num_linea][0] != "}":
+                                    resultado = consola.funcion_consola(matriz[num_linea], matriz, num_linea)
+                                    if resultado == True:
+                                        num_linea += 1
+                                        pass
+
+                                    elif resultado == False:
+                                        centinela = True
+                                        return False
+                                    
+                                else: centinela = True
+
+                            return True
+                            
+                except: return False
             
             elif l[1] == "can":
-                return True
+                try:
                     
+                    if (l[2] == "(") and (l[3] in (lista_noms_metodos or lista_noms_proc)):
+                        
+                        lim1 = 2
+                        lim2 = l.index(")") +1
+                        h = partir(lim1,lim2,l)
+                        lil = h[0] #aquello dentro de paréntesis del can
+                        l = h[1]   #la lista sin lo de dentro del paréntesis
+                        
+                        if (test_metodo(lil) == True) and (l[2] == "{"):
+                            limi1 = 2
+                            limi2 = l.index("}")
+                            
+                            h = partir(limi1,limi2,l)
+                            lili = h[0] # el bloque que ejecuta can
+                            l = h[1]   #la lista sin lo de dentro del paréntesis
+                            
+                        elif (l[2] == "{") and len(l) == 6:
+                            centinela = False
+                            num_linea = index + 1
+                            while centinela == False:
+
+                                if matriz[num_linea][0] != "}":
+                                    resultado = consola.funcion_consola(matriz[num_linea], matriz, num_linea)
+                                    if resultado == True:
+                                        num_linea += 1
+                                        pass
+
+                                    elif resultado == False:
+                                        centinela = True
+                                        return False
+                                    
+                                else: centinela = True
+
+                            return True
+                
+                except: return False 
+
             elif l[1] == "not":
-                return True
-        
+                for elemento in l:
+                    if elemento == "not":
+                        l.remove("elemento")
+                marca = test_condicionales(l,matriz,index)
+                if marca == True:
+                    return True
+                else: return False
+
     elif l[0] == "repeat":
         if type(l[1]) == int:
             if (l[2] == "times"):
-                nl = l[3:]
-                if test_block(nl) == True:
-                    return True    
+                if (l[3] == "{") and len(l) > 4:
+                    lim1 = 3
+                    lim2 = l.index("}")
+                    
+                    h = partir(lim1,lim2,l)
+                    lil = h[0]
+                    l = h[1]
+
+                    if (test_metodo(lil) == True) and (l[-1] == ";"):
+                        return True
+                    
+                elif (l[3] == "{") and len(l) == 4:
+                    centinela = False
+                    num_linea = index + 1
+                    while centinela == False:
+
+                        if matriz[num_linea][0] != "}":
+                            resultado = consola.funcion_consola(matriz[num_linea], matriz, num_linea)
+                            if resultado == True:
+                                num_linea += 1
+                                pass
+
+                            elif resultado == False:
+                                centinela = True
+                                return False
+                            
+                        else: centinela = True
+
+                    return True
 
     else: return False
