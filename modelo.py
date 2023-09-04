@@ -142,12 +142,11 @@ def test_corchete(linea):
 
     
 def test_metodo(l, matriz, index):
-
     met = l[0]
     
     if met == "jump":  
-
         try:
+
             entero1 = int(l[2])
             entero2 = int(l[3])
             

@@ -30,10 +30,9 @@ def funcion_consola(linea_en_una_lista, matriz_archivo, numero):
             if marca == True:
                 pass
             
-        elif (linea_en_una_lista[0] == "{") or (linea[0] == "}" ): 
+        elif (linea_en_una_lista[0] == "{") or (linea_en_una_lista[0] == "}" ): 
             
             marca = modelo.test_corchete(linea_en_una_lista)
-            print(marca)
 
             if marca == True:
                 pass
@@ -49,8 +48,7 @@ def funcion_consola(linea_en_una_lista, matriz_archivo, numero):
                      
         elif (linea_en_una_lista[0] in modelo.lista_noms_metodos):
             
-            marca = modelo.test_metodo(linea_en_una_lista)
-            print(marca)
+            marca = modelo.test_metodo(linea_en_una_lista, matriz_archivo, numero)
 
             if marca == True:
                 pass
