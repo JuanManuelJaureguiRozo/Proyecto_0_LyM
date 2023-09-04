@@ -342,7 +342,7 @@ def test_condicionales (l):
     
                     if (l[2] == "(") and (l[3] in lista_parametros_turn2) and (l[4] == ")"):
                         if (l[5] == "{") :
-                            print(a)
+                            print(1)
                 except: return False
 
             
