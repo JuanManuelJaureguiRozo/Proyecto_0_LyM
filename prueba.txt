@@ -5,7 +5,7 @@ defVar one 0
 
 defProc putCB (c, b)
 {
-    drop(c);
+    jump(c, b);
     letGo(b);
     walk(n)
 }
