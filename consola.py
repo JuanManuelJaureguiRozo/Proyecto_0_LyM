@@ -2,7 +2,7 @@ import modelo as modelo
 
 archivo = open("prueba.txt", "r")
 
-corchetes =[]
+corchetes = 0
 
 params_proc_actual = []
 
@@ -12,6 +12,13 @@ for linea in archivo:
     if linea != "\n": 
         linea = modelo.limpiar_linea(linea)
         matriz_archivo.append(linea)
+
+for linea in matriz_archivo:
+    for string in linea:
+        if string == "{":
+            corchetes += 1
+        elif string == "}":
+            corchetes -= 1
 
 def funcion_consola(matriz_archivo):
     centinela = True
@@ -92,7 +99,9 @@ def funcion_consola(matriz_archivo):
     if centinela == True:
         print("El programa es correcto")
 
-funcion_consola(matriz_archivo)
+if corchetes == 0:
+    funcion_consola(matriz_archivo)
+else: print("False")
 
 
 
