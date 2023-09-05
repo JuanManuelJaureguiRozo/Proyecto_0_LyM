@@ -6,6 +6,8 @@ corchetes = 0
 
 params_proc_actual = []
 
+params_cond_actual = []
+
 matriz_archivo = []
 
 for linea in archivo:
@@ -26,7 +28,6 @@ def funcion_consola(matriz_archivo):
     i = 0
     while centinela == True and i < tam:
         linea_en_una_lista = matriz_archivo[i] 
-        print(linea_en_una_lista)
         numero = matriz_archivo.index(linea_en_una_lista)
 
         if linea_en_una_lista[0] == "defVar":
@@ -73,7 +74,7 @@ def funcion_consola(matriz_archivo):
                     if v in params_proc_actual:
                         marca = modelo.test_metodo(linea_en_una_lista, matriz_archivo, numero, params)
                     else:
-                        marca = modelo.test_metodo(linea_en_una_lista, matriz_archivo, numero, params)
+                        marca = modelo.test_metodo(linea_en_una_lista, matriz_archivo, numero, params_proc_actual)
 
             if marca == False or marca == None:
                 centinela = False
@@ -84,10 +85,7 @@ def funcion_consola(matriz_archivo):
 
         elif linea_en_una_lista[0] in modelo.lista_condicionales:
 
-            for elemento in linea_en_una_lista:
-                if elemento == "{":
-            
-                    marca = modelo.test_Proc(linea_en_una_lista, numero)
+            marca = modelo.test_condicionales(linea_en_una_lista, matriz_archivo, numero, params_proc_actual)
 
             if marca == False or marca == None:
                 centinela = False

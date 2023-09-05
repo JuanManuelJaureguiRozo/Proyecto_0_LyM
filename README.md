@@ -1,1 +1,1 @@
-# Proyecto_0_LyM
+# Para ejecutar el proyecto se debe cargar el archivo que se quiere probar en "prueba.txt"
