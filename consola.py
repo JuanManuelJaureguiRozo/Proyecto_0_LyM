@@ -65,8 +65,8 @@ def funcion_consola(matriz_archivo):
                 for v in params:
                     if v in params_proc_actual:
                         marca = modelo.test_metodo(linea_en_una_lista, matriz_archivo, numero, params)
-            else:
-                marca = modelo.test_metodo(linea_en_una_lista, matriz_archivo, numero, params)
+                    else:
+                        marca = modelo.test_metodo(linea_en_una_lista, matriz_archivo, numero, params)
 
             if marca == False or marca == None:
                 centinela = False
