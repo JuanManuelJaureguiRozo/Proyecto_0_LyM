@@ -2,15 +2,19 @@ import modelo as modelo
 
 
 
-#l = ['if','facing','(','n',')','{','walk','(','1','w',')','}','else','{', 'walk','(','2','east',')','}']
-lili = [ 'if','can','(','walk','(','1','west',')',')','{','walk','(','1','west',')','}','else','{','nop','(',')','}' ]
+#l = ['if','facing','(','n',')','{','walk','(','1','w',')','}','else','{', 'walk','(','2','east',')','}',';']
+l = ['if','facing','(','n',')','{','if','facing','(','n',')','{','walk','(','1','w',')','}','else','{', 'walk','(','2','east',')','}',"}",'else','{', 'walk','(','2','east',')','}',';']
+
+#l = [ 'if','can','(','walk','(','1','west',')',')','{','walk','(','1','west',')','}','else','{','nop','(',')','}',';']
+
+#l = ["while",'can','(','jump','(','1','1',')',')','{','jump','(','1','1',')','}',';']
+#l = ["while",'facing','(','n',')','{','jump','(','1','1',')','}',";"]
+
+m = [[]]
+print(modelo.test_condicionales(l,m,3))
 
 
-#l = ['if','facing','(','n',')','{','if','facing','(','n',')','{','walk','(','1','w',')','}','else','{', 'walk','(','2','east',')','}',"}",'else','{', 'walk','(','2','east',')','}']
 
-
-lili.reverse()
-print(lili)
 """
 def partir (lim1, lim2, linea):
     

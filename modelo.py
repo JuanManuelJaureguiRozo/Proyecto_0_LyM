@@ -462,7 +462,7 @@ def test_condicionales (l, matriz, index):
                 try:
                     
                     if (l[2] == "(") and (l[3] in lista_parametros_turn2) and (l[4] == ")"):
-                        if (l[5] == "{") :
+                        if (l[5] == "{") and (l[6] in lista_noms_metodos):
                             
                             lim1 = 5
                             lim2 = l.index("}")
@@ -472,29 +472,58 @@ def test_condicionales (l, matriz, index):
                             l = h[1]   #la lista sin lo de dentro del paréntesis
                             
                             if (lil[0] in lista_noms_metodos) or (lil[0] in lista_noms_proc):
-                                if (test_metodo(lil) == True) and (l[5] == "else") and (l[6] == "{"):
+                                if (test_metodo(lil,matriz,index,almacenar_parametros(lil)) == True) and (l[5] == "else") and (l[6] == "{"):
                                     limi1 = 6
                                     limi2 = l.index("}")
                                     
                                     h = partir(limi1,limi2,l)
                                     lil = h[0] #aquello dentro de paréntesis que toca verificar
                                     l = h[1]   #la lista sin lo de dentro del paréntesis
-                                    if (test_metodo(lil) == True) and (l[-1] == ";"):
+                                    if (test_metodo(lil,matriz,index,almacenar_parametros(lil)) == True) and (l[-1] == ";"):
                                         return True
-                                    elif (test_metodo(lil) == True) and (l[-1] != ";"):
-                                        lineaa = limpiar_linea(matriz[index+1])
+                                    elif (test_metodo(lil,matriz,index,almacenar_parametros(lil)) == True) and (l[-1] != ";"):
+                                        lineaa = (matriz[index+1])
                                         if (lineaa[0] == "}") and (len(lineaa) == 1):
                                             return True
                                         else: return False
                     
-                            elif lil[0] in lista_condicionales:
-                                        print("me corchó")
-                                        return True       
+                        elif (l[5] == "{") and (l[6] in lista_condicionales):
+                            
+                            l.reverse()
+                            index_alreves = l.index("else")
+                            l.reverse()
+                            index_alderecho = len(l) - (index_alreves + 2)
+                            
+                            lim1 = 5
+                            lim2 = index_alderecho
+                            
+                            h = partir(lim1,lim2,l)
+                            
+                            lil = h[0] #aquello dentro de paréntesis que toca verificar
+                            lil.pop(-1)
+                            l = h[1]
+                            lil.append(";")
+
+                            if (test_condicionales(lil, matriz, index) == True) and (l[5] == "else") and (l[6] == "{"):
+                                limi1 = 6
+                                limi2 = l.index("}")
+                                
+                                h = partir(limi1,limi2,l)
+                                lil = h[0] #aquello dentro de paréntesis que toca verificar
+                                l = h[1]   #la lista sin lo de dentro del paréntesis
+                                if (test_metodo(lil,matriz,index,almacenar_parametros(lil)) == True) and (l[-1] == ";"):
+                                    return True
+                                elif (test_metodo(lil,matriz,index,almacenar_parametros(lil)) == True) and (l[-1] != ";"):
+                                    lineaa = (matriz[index+1])
+                                    if (lineaa[0] == "}") and (len(lineaa) == 1):
+                                        return True
+                                    else: return False
+                                else: return False
+                            else: return False
+                        else: return False
+                    else: return False
+                               
                 except: return False 
-            
-            #[ 'if','can','(','walk','(','1','west',')',')','{','walk','(','1','west',')','}','else','{','nop','(',')','}' ]
-            #[ 'if','can','{','walk','(','1','west',')','}','else','nop','(',')' ]
-            #[ 'if','can','else','nop','(',')' ]
                 
             elif l[1] == "can":
                 try:
@@ -507,7 +536,7 @@ def test_condicionales (l, matriz, index):
                         lil = h[0] #aquello dentro de paréntesis del can
                         l = h[1]   #la lista sin lo de dentro del paréntesis
                         
-                        if (test_metodo(lil) == True) and (l[3] == "{"): #l[2]?
+                        if (test_metodo(lil,matriz,index,almacenar_parametros(lil)) == True) and (l[3] == "{"): #l[2]?
                             limi1 = 3
                             limi2 = l.index("}")
                             
@@ -515,7 +544,7 @@ def test_condicionales (l, matriz, index):
                             lili = h[0] # el bloque que ejecuta can
                             l = h[1]   #la lista sin lo de dentro del paréntesis
                             
-                            if (test_metodo(lili) == True) and (l[3] == "else") and (l[4] == "{"):
+                            if (test_metodo(lili,matriz,index,almacenar_parametros(lili)) == True) and (l[3] == "else") and (l[4] == "{"):
                                 limimi1 = 3
                                 limimi2 = l.index("}")
                                 
@@ -523,17 +552,20 @@ def test_condicionales (l, matriz, index):
                                 lilili = h[0] #el bloque que ejecuta else
                                 l = h[1]   #la lista sin lo de dentro del paréntesis
                                 
-                                if (test_metodo(lilili) == True) and (l[-1] == ";"):
+                                if (test_metodo(lilili,matriz,index,almacenar_parametros(lilili)) == True) and (l[-1] == ";"):
                                     return True
-                                elif (test_metodo(lilili) == True) and (l[-1] != ";"):
+                                elif (test_metodo(lilili,matriz,index,almacenar_parametros(lilili)) == True) and (l[-1] != ";"):
                                         lineaa = matriz[index+1]
                                         if (lineaa[0] == "}") and (len(lineaa) == 1):
                                             return True
                                         else: return False
-            
+                                else: return False
+                            else: return False
+                        else: return False
+                    
                     elif lil[0] in lista_condicionales:
-                                print("me corchó")
-                                return True       
+                                return True      
+                    else: return False 
                 except: return False 
             
             elif l[1] == "not":
@@ -544,6 +576,7 @@ def test_condicionales (l, matriz, index):
                 if marca == True:
                     return True
                 else: return False
+            else: return False
                 
         else: return False
             
@@ -556,14 +589,19 @@ def test_condicionales (l, matriz, index):
     
                     if (l[2] == "(") and (l[3] in lista_parametros_turn2) and (l[4] == ")"):
                         if (l[5] == "{") and len(l) > 6:
+                            
                             lim1 = 5
                             lim2 = l.index("}")
                             
                             h = partir(lim1,lim2,l)
                             lil = h[0] #aquello dentro de paréntesis que toca verificar
                             l = h[1]   #la lista sin lo de dentro del paréntesis
-
-                            if (test_metodo(lil) == True) and (l[-1] == ";"):
+                            if (test_metodo(lil,matriz,index,almacenar_parametros(lil)) == True) and (l[-1] == ";"):
+                                
+                                return True
+                        elif (test_metodo(lil,matriz,index,almacenar_parametros(lil)) == True) and (l[-1] != ";"):
+                            lineaa = (matriz[index+1])
+                            if (lineaa[0] == "}") and (len(lineaa) == 1):
                                 return True
                             
                         elif (l[5] == "{") and len(l) == 6:
@@ -572,7 +610,7 @@ def test_condicionales (l, matriz, index):
                             while centinela == False:
 
                                 if matriz[num_linea][0] != "}":
-                                    resultado = consola.funcion_consola(matriz[num_linea], matriz, num_linea)
+                                    resultado = funcion_consola(matriz[num_linea], matriz, num_linea)
                                     if resultado == True:
                                         num_linea += 1
                                         pass
@@ -584,6 +622,8 @@ def test_condicionales (l, matriz, index):
                                 else: centinela = True
 
                             return True
+                        else: return False
+                    else: return False
                             
                 except: return False
             
@@ -598,13 +638,19 @@ def test_condicionales (l, matriz, index):
                         lil = h[0] #aquello dentro de paréntesis del can
                         l = h[1]   #la lista sin lo de dentro del paréntesis
                         
-                        if (test_metodo(lil) == True) and (l[2] == "{"):
+                        if (test_metodo(lil,matriz,index,almacenar_parametros(lil)) == True) and (l[2] == "{"):
                             limi1 = 2
                             limi2 = l.index("}")
-                            
                             h = partir(limi1,limi2,l)
                             lili = h[0] # el bloque que ejecuta can
                             l = h[1]   #la lista sin lo de dentro del paréntesis
+                            
+                            if (test_metodo(lil,matriz,index,almacenar_parametros(lil)) == True) and (l[2] == ";"):
+                                return True
+                            elif (test_metodo(lil,matriz,index,almacenar_parametros(lil)) == True) and (l[2] != ";"):
+                                lineaa = (matriz[index+1])
+                                if (lineaa[0] == "}") and (len(lineaa) == 1):
+                                    return True
                             
                         elif (l[2] == "{") and len(l) == 6:
                             centinela = False
@@ -624,6 +670,8 @@ def test_condicionales (l, matriz, index):
                                 else: centinela = True
 
                             return True
+                        else: return False
+                    else: return False
                 
                 except: return False 
 
@@ -635,6 +683,7 @@ def test_condicionales (l, matriz, index):
                 if marca == True:
                     return True
                 else: return False
+            else: return False
 
     elif l[0] == "repeat":
         if type(l[1]) == int:
@@ -647,7 +696,7 @@ def test_condicionales (l, matriz, index):
                     lil = h[0]
                     l = h[1]
 
-                    if (test_metodo(lil) == True) and (l[-1] == ";"):
+                    if (test_metodo(lil,matriz,index,almacenar_parametros(lil)) == True) and (l[-1] == ";"):
                         return True
                     
                 elif (l[3] == "{") and len(l) == 4:
@@ -670,3 +719,5 @@ def test_condicionales (l, matriz, index):
                     return True
 
     else: return False
+    
+    
